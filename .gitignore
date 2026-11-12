@@ -12,3 +12,6 @@ dist/
 
 CyberShieldAI_Final/
 CyberShieldAI_Final.zip
+
+models/url_model_backup_before_retraining.pkl
+src/predict_backup.py
