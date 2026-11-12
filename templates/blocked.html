@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Access Blocked | Cyber Shield AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #24101a,
+                    #090d18 55%
+                );
+
+            color: white;
+
+            padding: 25px;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            background: #11182d;
+
+            border: 1px solid #572235;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.45);
+
+            text-align: center;
+        }
+
+
+        .shield {
+
+            width: 90px;
+
+            height: 90px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #401624;
+
+            border: 2px solid #e04463;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 45px;
+        }
+
+
+        h1 {
+
+            font-size: 34px;
+
+            color: #ff617d;
+
+            margin-bottom: 10px;
+        }
+
+
+        .subtitle {
+
+            color: #aab3c8;
+
+            font-size: 15px;
+
+            margin-bottom: 28px;
+
+            line-height: 1.6;
+        }
+
+
+        .blocked-label {
+
+            display: inline-block;
+
+            background: #481a28;
+
+            border: 1px solid #a8324a;
+
+            color: #ff7185;
+
+            padding: 9px 18px;
+
+            border-radius: 30px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .url-box {
+
+            background: #080d19;
+
+            border: 1px solid #303a56;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            text-align: left;
+
+            margin-bottom: 25px;
+        }
+
+
+        .url-title {
+
+            color: #7f8ba7;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .url {
+
+            color: #e5e9f2;
+
+            font-size: 14px;
+
+            word-break: break-all;
+
+            line-height: 1.5;
+        }
+
+
+        .scores {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .score {
+
+            background: #0b1122;
+
+            border: 1px solid #283451;
+
+            border-radius: 12px;
+
+            padding: 18px;
+        }
+
+
+        .score p {
+
+            color: #7f8ba7;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .score strong {
+
+            font-size: 23px;
+
+            color: #ffffff;
+        }
+
+
+        .reason {
+
+            text-align: left;
+
+            background: #0b1122;
+
+            border: 1px solid #283451;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .reason h3 {
+
+            margin-bottom: 12px;
+
+            font-size: 16px;
+        }
+
+
+        .reason p {
+
+            color: #aab3c8;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        .indicator-title {
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            margin-top: 18px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .indicators {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+        }
+
+
+        .indicator {
+
+            background: #321723;
+
+            border: 1px solid #743247;
+
+            color: #ff8da0;
+
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            font-size: 12px;
+
+            word-break: break-word;
+        }
+
+
+        .no-indicator {
+
+            color: #8c98af;
+
+            font-size: 13px;
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .button {
+
+            text-decoration: none;
+
+            padding: 13px 22px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .dashboard {
+
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .dashboard:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .history {
+
+            background: #18254a;
+
+            color: white;
+
+            border: 1px solid #3b82f6;
+        }
+
+
+        .history:hover {
+
+            background: #24345f;
+        }
+
+
+        .footer {
+
+            margin-top: 25px;
+
+            color: #65708b;
+
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 650px) {
+
+            .container {
+
+                padding: 25px;
+            }
+
+            h1 {
+
+                font-size: 27px;
+            }
+
+            .scores {
+
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="shield">
+        🛡️
+    </div>
+
+
+    <div class="blocked-label">
+        ACCESS BLOCKED
+    </div>
+
+
+    <h1>
+        Suspicious URL Detected
+    </h1>
+
+
+    <p class="subtitle">
+
+        Cyber Shield AI has prevented access to this URL
+        because it was identified as potentially unsafe.
+
+    </p>
+
+
+    {% if result %}
+
+
+    <div class="url-box">
+
+        <div class="url-title">
+            BLOCKED URL
+        </div>
+
+        <div class="url">
+            {{ result.get("url", "Unknown URL") }}
+        </div>
+
+    </div>
+
+
+    <div class="scores">
+
+
+        <div class="score">
+
+            <p>
+                FINAL RISK
+            </p>
+
+            <strong>
+                {{ result.get("risk_score", 0) }}%
+            </strong>
+
+        </div>
+
+
+        <div class="score">
+
+            <p>
+                ML SCORE
+            </p>
+
+            <strong>
+                {{ result.get("ml_score", 0) }}%
+            </strong>
+
+        </div>
+
+
+        <div class="score">
+
+            <p>
+                HEURISTIC SCORE
+            </p>
+
+            <strong>
+                {{ result.get("heuristic_score", 0) }}%
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="reason">
+
+        <h3>
+            ⚠️ Why was this URL blocked?
+        </h3>
+
+        <p>
+
+            Cyber Shield AI detected one or more
+            suspicious characteristics in this URL.
+
+            The final decision combines Machine Learning,
+            heuristic security analysis and external
+            threat intelligence when available.
+
+            The URL crossed the configured blocking
+            threshold and was therefore prevented.
+
+        </p>
+
+
+        <div class="indicator-title">
+            🔎 Detected Security Indicators
+        </div>
+
+
+        {% if result.get("indicators") %}
+
+            <div class="indicators">
+
+                {% for indicator in result.get("indicators") %}
+
+                    <span class="indicator">
+                        {{ indicator }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="no-indicator">
+                No individual indicators were returned.
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <div class="reason">
+
+        <h3>
+            🧠 Detection Summary
+        </h3>
+
+        <p>
+
+            <strong>Action:</strong>
+            {{ result.get("action", "BLOCK") }}
+
+            <br><br>
+
+            <strong>Hostname:</strong>
+            {{ result.get("hostname", "Not available") }}
+
+            <br><br>
+
+            <strong>Threat Intelligence:</strong>
+            {{ result.get(
+                "threat_intelligence",
+                "No external threat intelligence result available."
+            ) }}
+
+        </p>
+
+    </div>
+
+
+    {% else %}
+
+
+    <div class="reason">
+
+        <h3>
+            ⚠️ Security Warning
+        </h3>
+
+        <p>
+
+            The requested URL could not be verified
+            as safe by Cyber Shield AI.
+
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <div class="buttons">
+
+        <a
+            href="/"
+            class="button dashboard"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <a
+            href="/history"
+            class="button history"
+        >
+            📊 View Scan History
+        </a>
+
+    </div>
+
+
+    <div class="footer">
+
+        Cyber Shield AI • AI-Based
+        Suspicious URL Detection & Blocking System
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

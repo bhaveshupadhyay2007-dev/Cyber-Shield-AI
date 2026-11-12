@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cyber Shield AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b1020;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #11182d;
+            border-bottom: 1px solid #26304d;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: #18254a;
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .logo-text h1 {
+            font-size: 23px;
+            color: #ffffff;
+        }
+
+        .logo-text p {
+            color: #8f9bb8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .history-btn {
+            text-decoration: none;
+            background: #18254a;
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .history-btn:hover {
+            background: #24345f;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1150px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #9ca8c4;
+            font-size: 15px;
+        }
+
+        .scan-card {
+            background: #11182d;
+            border: 1px solid #26304d;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .scan-card h3 {
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .scan-card .subtitle {
+            color: #8995b2;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .scan-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .scan-form input {
+            flex: 1;
+            background: #080d1b;
+            border: 1px solid #303b5c;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 9px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .scan-form input:focus {
+            border-color: #3b82f6;
+        }
+
+        .scan-form button {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 0 28px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .scan-form button:hover {
+            background: #1d4ed8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #11182d;
+            border: 1px solid #26304d;
+            border-radius: 13px;
+            padding: 20px;
+        }
+
+        .stat-card .label {
+            color: #8995b2;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .stat-card .value {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .result-card {
+            background: #11182d;
+            border: 1px solid #26304d;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .result-header h3 {
+            font-size: 21px;
+        }
+
+        .status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .safe {
+            background: #123b2a;
+            color: #55e6a5;
+            border: 1px solid #1e8f62;
+        }
+
+        .warning {
+            background: #493b12;
+            color: #f5d66b;
+            border: 1px solid #a88b25;
+        }
+
+        .suspicious {
+            background: #481b25;
+            color: #ff7185;
+            border: 1px solid #a8324a;
+        }
+
+        .url-box {
+            background: #080d1b;
+            border: 1px solid #293452;
+            border-radius: 9px;
+            padding: 15px;
+            word-break: break-all;
+            color: #b9c3da;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .scores {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .score-box {
+            background: #0b1122;
+            border: 1px solid #27324f;
+            border-radius: 10px;
+            padding: 17px;
+        }
+
+        .score-box p {
+            color: #8995b2;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .score-box strong {
+            font-size: 22px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #0b1122;
+            border: 1px solid #27324f;
+            border-radius: 10px;
+            padding: 17px;
+        }
+
+        .detail-box h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .detail-box p {
+            color: #a8b2c8;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .info {
+            background: #11182d;
+            border: 1px solid #26304d;
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .info h3 {
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #0b1122;
+            border: 1px solid #27324f;
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .info-item strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .info-item span {
+            color: #8995b2;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #65708b;
+            padding: 30px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+
+            .header {
+                padding: 18px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .scores {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scan-form {
+                flex-direction: column;
+            }
+
+            .scan-form button {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo-area">
+
+        <div class="logo">
+            🛡️
+        </div>
+
+        <div class="logo-text">
+            <h1>Cyber Shield AI</h1>
+            <p>AI-Powered Suspicious URL Detection & Protection</p>
+        </div>
+
+    </div>
+
+    <a href="/history" class="history-btn">
+        📊 Scan History
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <section class="hero">
+
+        <h2>Protect Before You Click</h2>
+
+        <p>
+            Analyze suspicious URLs using Machine Learning,
+            security heuristics and threat intelligence.
+        </p>
+
+    </section>
+
+
+    <section class="scan-card">
+
+        <h3>🔍 Scan a URL</h3>
+
+        <p class="subtitle">
+            Enter a website URL below to check whether it is safe or suspicious.
+        </p>
+
+        <form method="POST" class="scan-form">
+
+            <input
+                type="text"
+                name="url"
+                placeholder="https://example.com"
+                required
+            >
+
+            <button type="submit">
+                Scan URL
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if statistics %}
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="label">Total Scans</div>
+            <div class="value">
+                {{ statistics.total }}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Safe</div>
+            <div class="value">
+                {{ statistics.safe }}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Warnings</div>
+            <div class="value">
+                {{ statistics.warning }}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Suspicious</div>
+            <div class="value">
+                {{ statistics.suspicious }}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="label">Blocked</div>
+            <div class="value">
+                {{ statistics.blocked }}
+            </div>
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    {% if result %}
+
+    <section class="result-card">
+
+        <div class="result-header">
+
+            <h3>Scan Result</h3>
+
+            {% set status = result.get("classification", "UNKNOWN")|upper %}
+
+            {% if status == "SAFE" %}
+
+                <span class="status safe">
+                    🟢 SAFE
+                </span>
+
+            {% elif status == "WARNING" %}
+
+                <span class="status warning">
+                    🟡 WARNING
+                </span>
+
+            {% else %}
+
+                <span class="status suspicious">
+                    🔴 SUSPICIOUS
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="url-box">
+            {{ result.get("url", "") }}
+        </div>
+
+
+        <div class="scores">
+
+            <div class="score-box">
+                <p>Final Risk</p>
+                <strong>
+                    {{ result.get("risk_score", 0) }}%
+                </strong>
+            </div>
+
+            <div class="score-box">
+                <p>ML Score</p>
+                <strong>
+                    {{ result.get("ml_score", 0) }}%
+                </strong>
+            </div>
+
+            <div class="score-box">
+                <p>Heuristic Score</p>
+                <strong>
+                    {{ result.get("heuristic_score", 0) }}%
+                </strong>
+            </div>
+
+            <div class="score-box">
+                <p>Threat Intelligence</p>
+                <strong>
+                    {{ result.get("threat_intelligence_score", 0) }}%
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="detail-box">
+
+                <h4>🎯 Recommended Action</h4>
+
+                <p>
+                    {{ result.get("action", "CHECK") }}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>🌐 Hostname</h4>
+
+                <p>
+                    {{ result.get("hostname", "Not available") }}
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>🛡️ Threat Intelligence</h4>
+
+                <p>
+
+                    {% if result.get("threat_intelligence") %}
+
+                        {{ result.get("threat_intelligence") }}
+
+                    {% else %}
+
+                        No external threat intelligence detected.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <h4>⚠️ Security Indicators</h4>
+
+                <p>
+
+                    {% if result.get("indicators") %}
+
+                        {{ result.get("indicators") }}
+
+                    {% else %}
+
+                        No major suspicious indicators.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <section class="info">
+
+        <h3>⚙️ How Cyber Shield AI Works</h3>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+
+                <strong>🤖 Machine Learning</strong>
+
+                <span>
+                    Analyzes URL features and predicts suspicious behaviour.
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <strong>🔎 Heuristic Analysis</strong>
+
+                <span>
+                    Detects phishing keywords, risky domains,
+                    IP addresses and other indicators.
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <strong>🌐 Threat Intelligence</strong>
+
+                <span>
+                    Uses external security intelligence
+                    to identify known malicious URLs.
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<footer class="footer">
+
+    Cyber Shield AI • AI-Based Suspicious URL Detection & Blocking System
+
+</footer>
+
+</body>
+</html>

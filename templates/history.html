@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scan History - Cyber Shield AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                linear-gradient(135deg, #050b18, #0b1630);
+            color: white;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #91a4bf;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: #0c1a2e;
+            border: 1px solid #233a5f;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #8fa3bf;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: #00e5ff;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .table-box {
+            background: #071225;
+            border: 1px solid #233a5f;
+            border-radius: 16px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            color: #00e5ff;
+            text-align: left;
+            padding: 13px;
+            border-bottom: 1px solid #294466;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #172b46;
+            color: #c4d1e2;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: #0b1b31;
+        }
+
+        .url-cell {
+            max-width: 330px;
+            word-break: break-all;
+        }
+
+        .safe {
+            color: #42f5a7;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #ffd34d;
+            font-weight: bold;
+        }
+
+        .suspicious {
+            color: #ff5c73;
+            font-weight: bold;
+        }
+
+        .blocked {
+            color: #ff5c73;
+            font-weight: bold;
+        }
+
+        .score {
+            font-weight: bold;
+            color: #d9e6f5;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #8194ae;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 22px;
+            background: #087ea4;
+            color: white;
+            text-decoration: none;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            background: #099bc8;
+        }
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>
+        🛡️ Cyber Shield AI
+    </h1>
+
+    <div class="subtitle">
+        Security Scan History
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TOTAL SCANS
+            </div>
+
+            <div class="stat-value">
+                {{ statistics.total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                SAFE
+            </div>
+
+            <div class="stat-value">
+                {{ statistics.safe }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                WARNING
+            </div>
+
+            <div class="stat-value">
+                {{ statistics.warning }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                SUSPICIOUS
+            </div>
+
+            <div class="stat-value">
+                {{ statistics.suspicious }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                BLOCKED
+            </div>
+
+            <div class="stat-value">
+                {{ statistics.blocked }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- History Table -->
+
+    <div class="table-box">
+
+        {% if history %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Time</th>
+
+                    <th>URL</th>
+
+                    <th>Result</th>
+
+                    <th>Action</th>
+
+                    <th>Risk</th>
+
+                    <th>ML</th>
+
+                    <th>Heuristic</th>
+
+                    <th>Threat Intel</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for item in history %}
+
+                <tr>
+
+                    <!-- FIXED: timestamp instead of time -->
+
+                    <td>
+                        {{ item.timestamp }}
+                    </td>
+
+
+                    <td class="url-cell">
+                        {{ item.url }}
+                    </td>
+
+
+                    <!-- FIXED: classification instead of result -->
+
+                    <td>
+
+                        {% if item.classification == "SAFE" %}
+
+                            <span class="safe">
+                                SAFE
+                            </span>
+
+                        {% elif item.classification == "WARNING" %}
+
+                            <span class="warning">
+                                WARNING
+                            </span>
+
+                        {% elif item.classification == "SUSPICIOUS" %}
+
+                            <span class="suspicious">
+                                SUSPICIOUS
+                            </span>
+
+                        {% else %}
+
+                            <span class="warning">
+                                UNKNOWN
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if item.action == "BLOCK" %}
+
+                            <span class="blocked">
+                                BLOCK
+                            </span>
+
+                        {% elif item.action == "CHECK" %}
+
+                            <span class="warning">
+                                CHECK
+                            </span>
+
+                        {% elif item.action == "ALLOW" %}
+
+                            <span class="safe">
+                                ALLOW
+                            </span>
+
+                        {% else %}
+
+                            <span class="warning">
+                                UNKNOWN
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="score">
+                        {{ item.risk_score }}
+                    </td>
+
+
+                    <td class="score">
+                        {{ item.ml_score }}
+                    </td>
+
+
+                    <td class="score">
+                        {{ item.heuristic_score }}
+                    </td>
+
+
+                    <td class="score">
+                        {{ item.threat_intelligence_score }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+            <div class="empty">
+
+                No scans recorded yet.
+
+                <br><br>
+
+                Scan a URL from the dashboard
+                to create history.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+</body>
+
+</html>
